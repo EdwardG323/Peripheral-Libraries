@@ -10,7 +10,7 @@
  * PRIVATE #DEFINES									     *
 **********************************************************/
 
-#define TMP117_I2C_ADDRESS 0x48			// 
+#define TMP117_I2C_ADDRESS 0x48			// Default address
 #define TMP117_DEVICE_ID 0x0117			// Found in page23 of datasheet
  
 #define TMP117_RESOLUTION 0.0078125f	// Found on page1 of datasheet
@@ -34,4 +34,32 @@
  	TEMP_OFFSET = 0X07,		// Temperature offset register
  	EEPROM3 = 0X08,			// EEPROM3 register
  	DEVICE_ID = 0X0F		// Device ID register
- } TMP117_REGISTERS
+ } TMP117_REGISTERS;
+
+
+typedef union{
+ 	struct{
+ 		uint16_t EMPTY:1;		// Empty bit not used
+ 		uint16_t SOFT_RESET:1;	// Software reset bit
+ 		uint16_t DR_ALERT:1;	// ALERT pin select bit
+ 		uint16_t POL:1;			// ALERT pin polarity bit
+ 		uint16_t T_NA:1;		// Therm/alert mode select
+ 		uint16_t AVG:2;			// Conversion averaging modes
+ 		uint16_t CONV:3;		// Conversion cycle bit
+ 		uint16_t MOD:2;			// Set conversion bit
+ 		uint16_t EEPROM_BUSY:1;	// EEPROM busy flag
+ 		uint16_t DATA_READY:1;	// Data ready flag
+ 		uint16_t LOW_ALERT:1;	// Low alert flag
+ 		uint16_t HIGH_ALERT:1;	// High alert flag
+ 	};
+ 	uint16_t w:16;
+ } __TMP117CONbits;
+
+/*******************************************************************************
+ * PUBLIC FUNCTIONS                                                           *
+ ******************************************************************************/
+
+ char TMP117_Init(void){
+
+
+ }
