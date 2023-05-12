@@ -60,6 +60,22 @@ typedef union{
  ******************************************************************************/
 
  char TMP117_Init(void){
+ 	unsigned int intReturn;
+ 	unsigned char byteReturn;
+
+ 	intReturn = I2C_Init(I2C_DEFAULT_RATE);
+ 	if(intReturn != I2C_DEFAULT_RATE)
+ 		return FALSE;
+
+ 	I2C1CONbits.PEN =  1;
+ 	while(I2C1CONbits.PEN == 1);
+
+ 	byteReturn = I2C_ReadRegister(TMP117_I2C_ADDRESS, DEVICE_ID);
+ 	if(byteReturn != TMP117_DEVICE_ID){
+ 		printf("TMP117 did not respond to Who Am I\n");
+ 		return FALSE;
+ 	}
 
 
+ 	return TRUE;
  }
