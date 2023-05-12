@@ -1,7 +1,14 @@
+/**
+ * File:    TMP117.c
+ * Auhtor: Edward Garcia
+ * 
+ * Module to comunicate with the TMP over I2C
+ * Provides access to raw temperature reading
+ */
 #include <TMP117.h>
-#include <!2C.h>
-#include <BOARD.h>
-#include <xc.h>
+#include <I2C.h>
+#include <BOARD.h>      // UNO32 board header file
+#include <xc.h>         // Microchip library
 #include <stdio.h>
 
 // #define TMP116_TEST
@@ -77,5 +84,27 @@ typedef union{
  	}
 
 
+
  	return TRUE;
+ }
+
+ #ifdef TMP117_TEST
+
+ #include "serial.h"
+
+ int main(void){
+
+    char initResult;
+    BOARD_Init();
+
+    printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor 
+        will be broguht up and values displayed\r\n");
+
+    initResult = TMP117_Init();
+    if(initResult != TRUE){
+        printf("Initialization of TMP117 failed, stopping here.\r\n");
+    }
+    else{
+        printf("Initialization succeeded\r\n");
+    }
  }
