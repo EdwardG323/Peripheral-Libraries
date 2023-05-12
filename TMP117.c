@@ -59,16 +59,28 @@ typedef union{
  		uint16_t LOW_ALERT:1;	// Low alert flag
  		uint16_t HIGH_ALERT:1;	// High alert flag
  	};
- 	uint16_t w:16;
+    struct{
+        uint16_t w:16;
+    };
+ 	
  } __TMP117CONbits;
+
+volatile __TMP117CONbits TMP117CONbits;
 
 /*******************************************************************************
  * PUBLIC FUNCTIONS                                                           *
  ******************************************************************************/
 
+
+/**
+ * @Function TMP117_Init(void)
+ * @Param   None
+ * @Brief   Initializes the TMP117 for usage
+ * @Author  Edward Garcia
+*/
  char TMP117_Init(void){
  	unsigned int intReturn;
- 	unsigned char byteReturn;
+ 	int IDReturn;
 
  	intReturn = I2C_Init(I2C_DEFAULT_RATE);
  	if(intReturn != I2C_DEFAULT_RATE)
@@ -77,13 +89,11 @@ typedef union{
  	I2C1CONbits.PEN =  1;
  	while(I2C1CONbits.PEN == 1);
 
- 	byteReturn = I2C_ReadRegister(TMP117_I2C_ADDRESS, DEVICE_ID);
- 	if(byteReturn != TMP117_DEVICE_ID){
+ 	IDReturn = I2C_ReadInt(TMP117_I2C_ADDRESS, DEVICE_ID, TRUE);
+ 	if(IDReturn != TMP117_DEVICE_ID){
  		printf("TMP117 did not respond to Who Am I\n");
  		return FALSE;
  	}
-
-
 
  	return TRUE;
  }
@@ -107,4 +117,6 @@ typedef union{
     else{
         printf("Initialization succeeded\r\n");
     }
+
+    while(1);
  }
