@@ -92,6 +92,8 @@ volatile __TMP117CONbits TMP117CONbits;
  	IDReturn = I2C_ReadInt(TMP117_I2C_ADDRESS, DEVICE_ID, TRUE);
  	if(IDReturn != TMP117_DEVICE_ID){
  		printf("TMP117 did not respond to Who Am I\n");
+        printf("Expected ID value: %x\nActual return value: %x\n", TMP117_DEVICE_ID
+            , IDReturn);
  		return FALSE;
  	}
 
