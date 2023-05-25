@@ -11,7 +11,7 @@
 #include <xc.h>         // Microchip library
 #include <stdio.h>
 
-// #define TMP116_TEST
+#define TMP117_TEST
 
 /*********************************************************
  * PRIVATE #DEFINES									     *
@@ -109,8 +109,8 @@ volatile __TMP117CONbits TMP117CONbits;
     char initResult;
     BOARD_Init();
 
-    printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor 
-        will be broguht up and values displayed\r\n");
+    printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor" 
+        " will be brought up and values displayed\r\n");
 
     initResult = TMP117_Init();
     if(initResult != TRUE){
@@ -122,3 +122,5 @@ volatile __TMP117CONbits TMP117CONbits;
 
     while(1);
  }
+ 
+#endif
