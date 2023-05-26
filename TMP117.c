@@ -10,7 +10,7 @@
 #include <BOARD.h>      // UNO32 board header file
 #include <xc.h>         // Microchip library
 #include <stdio.h>
-#include <Oled.h>
+
 
 #define TMP117_TEST
 
@@ -104,6 +104,7 @@ volatile __TMP117CONbits TMP117CONbits;
  #ifdef TMP117_TEST
 
  //#include "serial.h"
+ #include <Oled.h>
 
  int main(void){
 
