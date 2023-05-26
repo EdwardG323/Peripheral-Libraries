@@ -10,6 +10,7 @@
 #include <BOARD.h>      // UNO32 board header file
 #include <xc.h>         // Microchip library
 #include <stdio.h>
+#include <Oled.h>
 
 #define TMP117_TEST
 
@@ -102,23 +103,36 @@ volatile __TMP117CONbits TMP117CONbits;
 
  #ifdef TMP117_TEST
 
- #include "serial.h"
+ //#include "serial.h"
 
  int main(void){
 
-    char initResult;
+    char string[OLED_CHARS_PER_LINE]; 
+    char string2[OLED_CHARS_PER_LINE];
+    char initResult = FALSE;
     BOARD_Init();
+    OledInit();
+    //SERIAL_Init();
+    
+    sprintf(string, "Welcome\n");
+    OledClear(OLED_COLOR_BLACK);
+    OledDrawString(string);
+    OledUpdate();
 
     printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor" 
         " will be brought up and values displayed\r\n");
 
     initResult = TMP117_Init();
     if(initResult != TRUE){
-        printf("Initialization of TMP117 failed, stopping here.\r\n");
+        sprintf(string2, "Initialization of TMP117 failed, stopping here.\r\n");
     }
     else{
-        printf("Initialization succeeded\r\n");
+        sprintf(string2, "Initialization succeeded\r\n");
     }
+    OledClear(OLED_COLOR_BLACK);
+    OledDrawString(string2);
+    OledUpdate();
+    
 
     while(1);
  }
