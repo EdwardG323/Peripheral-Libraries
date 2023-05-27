@@ -103,25 +103,36 @@ volatile __TMP117CONbits TMP117CONbits;
 
  #ifdef TMP117_TEST
 
- //#include "serial.h"
+ #include "serial.h"
  #include <Oled.h>
+#include <string.h>
+#include <stdlib.h>
 
  int main(void){
 
+    char message[] = "Welcome to the TMP117 test\n";
     char string[OLED_CHARS_PER_LINE]; 
     char string2[OLED_CHARS_PER_LINE];
     char initResult = FALSE;
     BOARD_Init();
     OledInit();
-    //SERIAL_Init();
+    SERIAL_Init();      // BOARD_Init should already call SERIAL_Init
     
     sprintf(string, "Welcome\n");
     OledClear(OLED_COLOR_BLACK);
     OledDrawString(string);
     OledUpdate();
+    
+    int i;
+    for(i=0; i<strlen(message);i++){
+        PutChar(message[i]);
+    }
 
-    printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor" 
-        " will be brought up and values displayed\r\n");
+    if (IsTransmitEmpty()){
+        printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor" 
+            " will be brought up and values displayed\r\n");
+    }
+    
 
     initResult = TMP117_Init();
     if(initResult != TRUE){
