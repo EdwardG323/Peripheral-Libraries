@@ -99,7 +99,18 @@ volatile __TMP117CONbits TMP117CONbits;
  	}
 
  	return TRUE;
- }
+}
+ 
+/**
+ * @Function	TMP117_ReadTemp(void)
+ * @Param	None
+ * @Brief	Reads sensor temperature reading
+ * @Return 	Returns raw temperature reading
+ * @Author	Edward Garcia 
+ */
+int TMP117_ReadTemp(void){
+    return I2C_ReadInt(TMP117_I2C_ADDRESS,  TEMP_RESULT, TRUE);
+}
 
  #ifdef TMP117_TEST
 

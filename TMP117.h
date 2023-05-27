@@ -25,6 +25,6 @@ char TMP117_Init(void);
  * @Return 	Returns raw temperature reading
  * @Author	Edward Garcia 
  */
-char TMP117_ReadTemp(void);
+int TMP117_ReadTemp(void);
 
 #endif
