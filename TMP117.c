@@ -151,10 +151,22 @@ int TMP117_ReadTemp(void){
     }
     else{
         sprintf(string2, "Initialization succeeded\r\n");
+        OledClear(OLED_COLOR_BLACK);
+        OledDrawString(string2);
+        OledUpdate();
+        while(1){
+            // Read Raw temp data
+            int rawTemp = TMP117_ReadTemp();
+            // Convert to celsius
+            int TempC = rawTemp * TMP117_RESOLUTION;
+            // Display on OLED
+            sprintf(string2, "Temperature: %d%sc", TempC, DEGREE_SYMBOL);
+            OledClear(OLED_COLOR_BLACK);
+            OledDrawString(string2);
+            OledUpdate();
+        }
     }
-    OledClear(OLED_COLOR_BLACK);
-    OledDrawString(string2);
-    OledUpdate();
+    
     
 
     while(1);
