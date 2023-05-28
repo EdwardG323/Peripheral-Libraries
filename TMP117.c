@@ -92,8 +92,8 @@ volatile __TMP117CONbits TMP117CONbits;
 
  	IDReturn = I2C_ReadInt(TMP117_I2C_ADDRESS, DEVICE_ID, TRUE);
  	if(IDReturn != TMP117_DEVICE_ID){
- 		printf("TMP117 did not respond to Who Am I\n");
-        printf("Expected ID value: %x\nActual return value: %x\n", TMP117_DEVICE_ID
+ 		printf("TMP117 did not respond to Who Am I\n\r");
+        printf("Expected ID value: %x\n\rActual return value: %x\n\r", TMP117_DEVICE_ID
             , IDReturn);
  		return FALSE;
  	}
@@ -119,7 +119,7 @@ int TMP117_ReadTemp(void){
 #include <string.h>
 #include <stdlib.h>
 
- int main(void){
+ int main(int argc, char** argv){
 
     char message[] = "Welcome to the TMP117 test\n";
     char string[OLED_CHARS_PER_LINE]; 
@@ -135,9 +135,9 @@ int TMP117_ReadTemp(void){
     OledUpdate();
     
     int i;
-    for(i=0; i<strlen(message);i++){
-        PutChar(message[i]);
-    }
+//    for(i=0; i<strlen(message);i++){
+//        PutChar(message[i]);
+//    }
 
     if (IsTransmitEmpty()){
         printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor" 
@@ -170,6 +170,8 @@ int TMP117_ReadTemp(void){
     
 
     while(1);
+    
+    return (EXIT_SUCCESS);
  }
  
 #endif
