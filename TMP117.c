@@ -112,32 +112,43 @@ int TMP117_ReadTemp(void){
     return I2C_ReadInt(TMP117_I2C_ADDRESS,  TEMP_RESULT, TRUE);
 }
 
- #ifdef TMP117_TEST
+/**
+ * @Function    TMP117_ReadTempC(void)
+ * @Param   None
+ * @Brief   Reads sensor temperature reading
+ * @Return  Returns temperature reading in celsius
+ * @Author  Edward Garcia 
+ */
+int TMP117_ReadTempC(void){
+    return I2C_ReadInt(TMP117_I2C_ADDRESS, TEMP_RESULT, TRUE) * TMP117_RESOLUTION;
+}
 
- #include "serial.h"
- #include <Oled.h>
+/**
+ * @Function    TMP117_ReadTempF(void)
+ * @Param   None
+ * @Brief   Reads sensor temperature reading
+ * @Return  Returns temperature reading in farenheight
+ * @Author  Edward Garcia 
+ */
+int TMP117_ReadTempF(void){
+    return (TMP117_ReadTempC() * 1.8) + 32;
+}
+
+#ifdef TMP117_TEST
+
+#include "serial.h"
+#include <Oled.h>
 #include <string.h>
 #include <stdlib.h>
 
  int main(int argc, char** argv){
-
-    char message[] = "Welcome to the TMP117 test\n";
-    char string[OLED_CHARS_PER_LINE]; 
+ 
     char string2[OLED_CHARS_PER_LINE];
     char initResult = FALSE;
     BOARD_Init();
     OledInit();
     SERIAL_Init();      // BOARD_Init should already call SERIAL_Init
     
-    sprintf(string, "Welcome\n");
-    OledClear(OLED_COLOR_BLACK);
-    OledDrawString(string);
-    OledUpdate();
-    
-    int i;
-//    for(i=0; i<strlen(message);i++){
-//        PutChar(message[i]);
-//    }
 
     if (IsTransmitEmpty()){
         printf("Welcome to the TMP117 test compiled at " __DATE__" " __TIME__ ". Sensor" 
@@ -147,13 +158,10 @@ int TMP117_ReadTemp(void){
 
     initResult = TMP117_Init();
     if(initResult != TRUE){
-        sprintf(string2, "Initialization of TMP117 failed, stopping here.\r\n");
+        printf("Initialization of TMP117 failed, stopping here.\r\n");
     }
     else{
-        sprintf(string2, "Initialization succeeded\r\n");
-        OledClear(OLED_COLOR_BLACK);
-        OledDrawString(string2);
-        OledUpdate();
+        printf("Initialization succeeded\r\n");
         while(1){
             // Read Raw temp data
             int rawTemp = TMP117_ReadTemp();

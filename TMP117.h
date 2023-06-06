@@ -27,4 +27,22 @@ char TMP117_Init(void);
  */
 int TMP117_ReadTemp(void);
 
+/**
+ * @Function    TMP117_ReadTempC(void)
+ * @Param   None
+ * @Brief   Reads sensor temperature reading
+ * @Return  Returns temperature reading in celsius
+ * @Author  Edward Garcia 
+ */
+int TMP117_ReadTempC(void);
+
+/**
+ * @Function    TMP117_ReadTempF(void)
+ * @Param   None
+ * @Brief   Reads sensor temperature reading
+ * @Return  Returns temperature reading in farenheight
+ * @Author  Edward Garcia 
+ */
+int TMP117_ReadTempF(void);
+
 #endif
