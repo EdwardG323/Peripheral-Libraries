@@ -163,6 +163,11 @@ int TMP117_ReadTempF(void){
     else{
         printf("Initialization succeeded\r\n");
         while(1){
+            int config = I2C_ReadInt(TMP117_I2C_ADDRESS, CONFIGURATION, TRUE);
+            printf("Default configuration register: %x\r\n", config);
+
+            //config ^= 0x0c00;
+
             // Read Raw temp data
             int rawTemp = TMP117_ReadTemp();
             // Convert to celsius
